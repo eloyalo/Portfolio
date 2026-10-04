@@ -13,6 +13,15 @@ export const languageNames: Record<Lang, string> = {
   ru: 'Русский',
 };
 
+// Formato idioma_PAÍS que pide Open Graph (og:locale)
+export const ogLocales: Record<Lang, string> = {
+  es: 'es_ES',
+  gl: 'gl_ES',
+  en: 'en_US',
+  pt: 'pt_PT',
+  ru: 'ru_RU',
+};
+
 // Un texto en todos los idiomas: TypeScript avisa si falta alguno
 export type Localized<T = string> = Record<Lang, T>;
 
