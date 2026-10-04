@@ -1,0 +1,14 @@
+---
+import ProjectPage from '../../views/ProjectPage.astro';
+import { getProjects, type Project } from '../../lib/projects';
+import { defaultLang } from '../../i18n/config';
+
+export async function getStaticPaths() {
+  const projects = await getProjects(defaultLang);
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: Project };
+---
+
+<ProjectPage project={project} lang={defaultLang} />

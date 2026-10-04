@@ -1,0 +1,88 @@
+---
+import Section from './Section.astro';
+import Tags from './Tags.astro';
+import { languages, skills } from '../data/profile';
+import type { Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Section id="skills" title={t('skills.title')}>
+  <div class="columns">
+    <div>
+      <h3>{t('skills.stack')}</h3>
+      <dl class="stack">
+        {skills.map((skill) => (
+          <div>
+            <dt>{skill.group[lang]}</dt>
+            <dd><Tags items={skill.items} /></dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <div>
+      <h3>{t('skills.languages')}</h3>
+      <ul class="plain languages">
+        {languages.map((item) => (
+          <li>
+            <strong>{item.name[lang]}</strong>
+            <span>{item.level[lang]}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 2rem 3rem;
+  }
+  h3 {
+    margin: 0 0 1rem;
+    font-size: 1.125rem;
+  }
+  .stack {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+  }
+  dt {
+    margin-bottom: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  dd {
+    margin: 0;
+  }
+  .plain {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .plain li {
+    display: grid;
+  }
+  .plain span {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .languages li {
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+</style>

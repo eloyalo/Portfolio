@@ -1,0 +1,62 @@
+---
+import Section from './Section.astro';
+import { about, services } from '../data/profile';
+import type { Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Section id="about" title={t('about.title')}>
+  <div class="bio">
+    {about[lang].map((paragraph) => <p>{paragraph}</p>)}
+  </div>
+
+  <h3>{t('about.services')}</h3>
+  <ul class="services">
+    {services.map((service) => (
+      <li>
+        <strong>{service.title[lang]}</strong>
+        <span>{service.text[lang]}</span>
+      </li>
+    ))}
+  </ul>
+</Section>
+
+<style>
+  .bio {
+    max-width: 40rem;
+  }
+  .bio p {
+    margin: 0 0 1rem;
+  }
+  h3 {
+    margin: 2.5rem 0 1rem;
+    font-size: 1.125rem;
+  }
+  .services {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .services li {
+    display: grid;
+    gap: 0.375rem;
+    padding: 1rem 1.125rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .services span {
+    font-size: 0.925rem;
+    color: var(--muted);
+  }
+</style>

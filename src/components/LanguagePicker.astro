@@ -1,0 +1,58 @@
+---
+// Enlaces a la página actual en cada idioma. Sin JavaScript.
+import { languageNames, locales, localizePath, type Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav class="languages" aria-label={t('nav.language')}>
+  <ul>
+    {locales.map((l) => (
+      <li>
+        <a
+          href={localizePath(l, path)}
+          hreflang={l}
+          lang={l}
+          title={languageNames[l]}
+          aria-current={l === lang ? 'true' : undefined}
+        >
+          {l.toUpperCase()}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  a {
+    display: block;
+    padding: 0.15rem 0.45rem;
+    border-radius: 0.375rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--text);
+  }
+  a[aria-current] {
+    color: var(--accent-contrast);
+    background: var(--accent);
+  }
+</style>

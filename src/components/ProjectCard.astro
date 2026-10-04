@@ -1,0 +1,92 @@
+---
+import Tags from './Tags.astro';
+import type { Project } from '../lib/projects';
+import { localizePath, type Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+
+const { project, lang } = Astro.props;
+const t = useTranslations(lang);
+const { title, summary, year, sector, stack, confidential, repo } = project.data;
+const badge = confidential ? t('projects.confidential') : repo ? t('projects.openSource') : undefined;
+const href = localizePath(lang, `/proyectos/${project.slug}/`);
+---
+
+<article class="card">
+  <p class="meta">
+    <span>{year}{sector && ` · ${sector}`}</span>
+    {badge && <span class:list={['badge', { open: !confidential }]}>{badge}</span>}
+  </p>
+  <h3><a href={href}>{title}</a></h3>
+  <p class="summary">{summary}</p>
+  <Tags items={stack} label={t('projects.stack')} />
+  <p class="more" aria-hidden="true">{t('projects.more')} →</p>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition: border-color 0.15s;
+  }
+  .card:hover,
+  .card:focus-within {
+    border-color: var(--accent);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .badge {
+    padding: 0 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.75rem;
+  }
+  .badge.open {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+  /* Toda la tarjeta es clicable sin anidar enlaces */
+  h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .summary {
+    margin: 0;
+    flex: 1;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .more {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+</style>

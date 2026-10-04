@@ -1,0 +1,82 @@
+---
+import { site, siteText } from '../data/site';
+import type { Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="hero">
+  <div class="container">
+    {site.available && (
+      <p class="status">
+        <span class="dot" aria-hidden="true"></span>
+        {siteText.availability[lang]}
+      </p>
+    )}
+    <h1>{site.name}</h1>
+    <p class="headline">{siteText.role[lang]} · {siteText.headline[lang]}</p>
+    <p class="tagline">{siteText.tagline[lang]}</p>
+    <p class="meta">{site.location} · {siteText.hours[lang]}</p>
+    <div class="actions">
+      <a class="button primary" href="#contact">{t('hero.contact')}</a>
+      <a class="button" href="#projects">{t('hero.projects')}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: 1.25rem;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 1.5rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--ok);
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 9vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .headline {
+    margin: 0.75rem 0 0;
+    font-size: clamp(1.1rem, 3vw, 1.35rem);
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .tagline {
+    max-width: 38rem;
+    margin: 1.25rem 0 0;
+    font-size: 1.125rem;
+  }
+  .meta {
+    margin: 0.75rem 0 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+</style>

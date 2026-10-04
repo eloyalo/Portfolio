@@ -1,0 +1,80 @@
+---
+import Section from './Section.astro';
+import Tags from './Tags.astro';
+import { experience } from '../data/profile';
+import { formatMonth, type Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Section id="experience" title={t('experience.title')}>
+  <ol class="timeline">
+    {experience.map((job) => (
+      <li>
+        <p class="dates">
+          <time datetime={job.start}>{formatMonth(job.start, lang)}</time>
+          {' – '}
+          {job.end ? <time datetime={job.end}>{formatMonth(job.end, lang)}</time> : t('experience.present')}
+        </p>
+        <h3>
+          {job.role} <span class="company">· {job.company}</span>
+        </h3>
+        <p class="location">{job.location}</p>
+        <p>{job.summary[lang]}</p>
+        {job.highlights && (
+          <ul class="highlights">
+            {job.highlights[lang].map((item) => <li>{item}</li>)}
+          </ul>
+        )}
+        <Tags items={job.stack} label={t('projects.stack')} />
+      </li>
+    ))}
+  </ol>
+</Section>
+
+<style>
+  .timeline {
+    display: grid;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .timeline > li {
+    padding-left: 1.25rem;
+    border-left: 2px solid var(--border);
+  }
+  .dates {
+    margin: 0;
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+  }
+  h3 {
+    margin: 0.25rem 0 0;
+    font-size: 1.125rem;
+  }
+  .company {
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .location {
+    margin: 0 0 0.75rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  p {
+    max-width: 40rem;
+  }
+  .highlights {
+    max-width: 40rem;
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import Section from './Section.astro';
+import { site } from '../data/site';
+import type { Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const { email, linkedin, github, arc, malt } = site.links;
+
+// Solo se muestran los enlaces que estén rellenos en src/data/site.ts
+const links = [
+  { label: 'LinkedIn', href: linkedin },
+  { label: 'GitHub', href: github },
+  { label: 'Arc', href: arc },
+  { label: 'Malt', href: malt },
+].filter((link) => link.href);
+---
+
+<Section id="contact" title={t('contact.title')}>
+  <p class="lead">{t('contact.text')}</p>
+  <div class="actions">
+    {email && (
+      <a class="button primary" href={`mailto:${email}`}>
+        {t('contact.email')}
+      </a>
+    )}
+    {links.map((link) => (
+      <a class="button" href={link.href} rel="me noopener" target="_blank">
+        {link.label}
+      </a>
+    ))}
+  </div>
+</Section>
+
+<style>
+  .lead {
+    max-width: 36rem;
+    margin: 0;
+    font-size: 1.125rem;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+</style>

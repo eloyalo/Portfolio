@@ -1,0 +1,59 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site, siteText } from '../data/site';
+import { locales, localizePath, stripLang, type Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  localized?: boolean; // false = la página no tiene versiones en otros idiomas (404)
+}
+
+const { lang, title, description = siteText.description[lang], localized = true } = Astro.props;
+const t = useTranslations(lang);
+const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | ${siteText.role[lang]}`;
+
+// Misma página en los demás idiomas (para buscadores y el selector de idioma)
+const path = localized ? stripLang(Astro.url.pathname) : '/';
+const base = Astro.site ?? Astro.url;
+const alternates = locales.map((l) => ({ lang: l, href: new URL(localizePath(l, path), base).href }));
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    {!localized && <meta name="robots" content="noindex" />}
+    {localized && Astro.site && <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />}
+    {localized && alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    {localized && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang} />
+    {/* Imagen al compartir: necesita URL absoluta, así que depende de `site` en astro.config.mjs */}
+    {Astro.site && <meta property="og:image" content={new URL('/og.png', Astro.site).href} />}
+    {Astro.site && <meta property="og:image:width" content="1200" />}
+    {Astro.site && <meta property="og:image:height" content="630" />}
+    {Astro.site && <meta property="og:image:alt" content={pageTitle} />}
+    {Astro.site && <meta name="twitter:card" content="summary_large_image" />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t('nav.skip')}</a>
+    <Header lang={lang} path={path} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

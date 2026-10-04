@@ -1,0 +1,82 @@
+---
+import { site } from '../data/site';
+import { localizePath, type Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+import LanguagePicker from './LanguagePicker.astro';
+
+interface Props {
+  lang: Lang;
+  path: string; // ruta actual sin prefijo de idioma
+}
+
+const { lang, path } = Astro.props;
+const t = useTranslations(lang);
+const home = localizePath(lang);
+
+const nav = [
+  { href: `${home}#about`, label: t('nav.about') },
+  { href: `${home}#experience`, label: t('nav.experience') },
+  { href: `${home}#projects`, label: t('nav.projects') },
+  { href: `${home}#contact`, label: t('nav.contact') },
+];
+---
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href={home}>{site.name}</a>
+    <nav aria-label="Principal">
+      <ul>
+        {nav.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <LanguagePicker lang={lang} path={path} />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    padding-block: 0.75rem;
+  }
+  .brand {
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    margin-right: auto;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.95rem;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  nav a:hover {
+    color: var(--text);
+  }
+  @media (max-width: 640px) {
+    nav {
+      order: 3;
+      width: 100%;
+    }
+  }
+</style>

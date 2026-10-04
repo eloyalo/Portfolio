@@ -1,0 +1,48 @@
+---
+// nginx sirve esta página para cualquier ruta inexistente, en cualquier idioma
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { defaultLang, languageNames, locales, localizePath } from '../i18n/config';
+import { ui, useTranslations } from '../i18n/ui';
+
+const t = useTranslations(defaultLang);
+---
+
+<BaseLayout lang={defaultLang} title={t('notFound.title')} localized={false}>
+  <section class="container not-found">
+    <p class="code">404</p>
+    <h1>{t('notFound.title')}</h1>
+    <ul>
+      {locales.map((lang) => (
+        <li lang={lang}>
+          {ui[lang]['notFound.text']} <a href={localizePath(lang)}>{ui[lang]['notFound.back']}</a>
+          <span class="lang">({languageNames[lang]})</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-block: clamp(4rem, 12vw, 7rem);
+  }
+  .code {
+    margin: 0;
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  h1 {
+    margin: 0 0 1.5rem;
+  }
+  ul {
+    display: grid;
+    gap: 0.5rem;
+    padding: 0;
+    list-style: none;
+  }
+  .lang {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+</style>
