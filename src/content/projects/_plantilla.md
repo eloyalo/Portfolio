@@ -12,6 +12,7 @@ draft: true # quítalo o ponlo a false para publicarlo
 confidential: true # proyecto de empresa: muestra el aviso de confidencialidad (quítalo si es tuyo)
 # repo: https://github.com/eloyalo/...
 # demo: https://...
+# website: https://... # página de presentación o descarga
 # screenshots:              # imágenes en src/assets/projects/<slug>/
 #   - src: ../../../assets/projects/mi-proyecto/captura.png
 #     alt: Qué se ve en la captura

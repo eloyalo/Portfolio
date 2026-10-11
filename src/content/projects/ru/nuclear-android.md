@@ -7,6 +7,7 @@ sector: Открытый код
 stack: [TypeScript, React, Rust, Tauri, Android]
 order: 1
 repo: https://github.com/eloyalo/nuclear-android
+website: https://nuclear.eloyalonso.dev/
 screenshots:
   - src: ../../../assets/projects/nuclear-android/queue.png
     alt: Воспроизведение альбома с открытой очередью

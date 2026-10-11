@@ -27,6 +27,7 @@ const es = {
   'projects.stack': 'Stack',
   'projects.repo': 'Ver el código',
   'projects.demo': 'Demo',
+  'projects.website': 'Web y descarga',
   'projects.screenshots': 'Capturas',
   'projects.confidential': 'Confidencial',
   'projects.confidentialNote':
@@ -79,6 +80,7 @@ export const ui: Record<Lang, Record<UiKey, string>> = {
     'projects.stack': 'Stack',
     'projects.repo': 'Ver o código',
     'projects.demo': 'Demo',
+    'projects.website': 'Web e descarga',
     'projects.screenshots': 'Capturas',
     'projects.confidential': 'Confidencial',
     'projects.confidentialNote':
@@ -126,6 +128,7 @@ export const ui: Record<Lang, Record<UiKey, string>> = {
     'projects.stack': 'Stack',
     'projects.repo': 'View the code',
     'projects.demo': 'Demo',
+    'projects.website': 'Website & download',
     'projects.screenshots': 'Screenshots',
     'projects.confidential': 'Confidential',
     'projects.confidentialNote':
@@ -173,6 +176,7 @@ export const ui: Record<Lang, Record<UiKey, string>> = {
     'projects.stack': 'Stack',
     'projects.repo': 'Ver o código',
     'projects.demo': 'Demo',
+    'projects.website': 'Site e download',
     'projects.screenshots': 'Capturas de ecrã',
     'projects.confidential': 'Confidencial',
     'projects.confidentialNote':
@@ -220,6 +224,7 @@ export const ui: Record<Lang, Record<UiKey, string>> = {
     'projects.stack': 'Стек',
     'projects.repo': 'Исходный код',
     'projects.demo': 'Демо',
+    'projects.website': 'Сайт и загрузка',
     'projects.screenshots': 'Скриншоты',
     'projects.confidential': 'Конфиденциально',
     'projects.confidentialNote':

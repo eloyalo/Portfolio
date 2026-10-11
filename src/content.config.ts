@@ -20,6 +20,7 @@ const projects = defineCollection({
       confidential: z.boolean().default(false), // hecho para una empresa: muestra el aviso de confidencialidad
       repo: z.string().optional(),
       demo: z.string().optional(),
+      website: z.string().optional(), // página de presentación o descarga
       // Capturas: rutas relativas al .md (Astro las optimiza al compilar)
       screenshots: z.array(z.object({ src: image(), alt: z.string() })).default([]),
     }),

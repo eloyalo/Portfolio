@@ -15,7 +15,7 @@ interface Props {
 
 const { project, lang } = Astro.props;
 const t = useTranslations(lang);
-const { title, summary, year, role, sector, stack, repo, demo, confidential, screenshots } = project.data;
+const { title, summary, year, role, sector, stack, repo, demo, website, confidential, screenshots } = project.data;
 const { Content } = await render(project);
 
 const facts = [
@@ -41,10 +41,11 @@ const facts = [
         ))}
       </dl>
       <Tags items={stack} label={t('projects.stack')} />
-      {(repo || demo) && (
+      {(repo || demo || website) && (
         <p class="links">
           {repo && <a class="button" href={repo} rel="noopener" target="_blank">{t('projects.repo')}</a>}
           {demo && <a class="button primary" href={demo} rel="noopener" target="_blank">{t('projects.demo')}</a>}
+          {website && <a class="button primary" href={website} rel="noopener" target="_blank">{t('projects.website')}</a>}
         </p>
       )}
     </header>
